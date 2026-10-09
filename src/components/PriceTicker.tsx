@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Product } from '../lib/api';
-import { toBengaliNumber, getUnitBn, getProductIcon } from '../lib/utils';
+import { Product } from '@/lib/api';
+import { toBengaliNumber, getUnitBn, getProductIcon } from '@/lib/utils';
 import Link from 'next/link';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
