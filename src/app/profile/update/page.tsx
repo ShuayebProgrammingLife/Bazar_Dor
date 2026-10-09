@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Edit3, User as UserIcon, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Edit3, User as UserIcon, ArrowLeft, CheckCircle, UploadCloud } from 'lucide-react';
 
 export default function ProfileUpdatePage() {
   const router = useRouter();
   const { user, updateUser } = useAuth();
   const [name, setName] = useState(user?.name || '');
+  const [avatarPreview, setAvatarPreview] = useState(user?.avatar || '');
   const [loading, setLoading] = useState(false);
 
   if (!user) {
@@ -23,10 +25,27 @@ export default function ProfileUpdatePage() {
     );
   }
 
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('শুধু ইমেজ ফাইল নির্বাচন করুন');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : '';
+      setAvatarPreview(result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const success = await updateUser(name);
+    const success = await updateUser(name, avatarPreview || user.avatar);
     setLoading(false);
     if (success) {
       router.push('/profile');
@@ -59,6 +78,29 @@ export default function ProfileUpdatePage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="flex flex-col items-center gap-3 py-2">
+            <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-emerald-200 bg-slate-100 shadow-sm">
+              {avatarPreview ? (
+                <Image
+                  src={avatarPreview}
+                  alt="Profile preview"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-emerald-50 text-emerald-700">
+                  <UserIcon className="h-8 w-8" />
+                </div>
+              )}
+            </div>
+
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-700">
+              <UploadCloud className="h-4 w-4" />
+              <span>প্রোফাইল ছবি নির্বাচন</span>
+              <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+            </label>
+          </div>
+
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1">
               সম্পূর্ণ নাম (Name)

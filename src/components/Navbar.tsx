@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -22,8 +23,12 @@ export default function Navbar({ categories, tickerProducts = [] }: NavbarProps)
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    setBanglaDate(getBanglaDate());
+    const timer = window.setTimeout(() => {
+      setMounted(true);
+      setBanglaDate(getBanglaDate());
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (
@@ -77,10 +82,12 @@ export default function Navbar({ categories, tickerProducts = [] }: NavbarProps)
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200/80 transition-colors border border-slate-200 text-slate-800 text-sm font-semibold"
                 >
                   {user.avatar ? (
-                    <img
+                    <Image
                       src={user.avatar}
                       alt={user.name}
-                      className="w-6 h-6 rounded-full object-cover border border-slate-300"
+                      width={24}
+                      height={24}
+                      className="rounded-full object-cover border border-slate-300"
                     />
                   ) : (
                     <UserIcon className="w-4 h-4 text-emerald-600" />

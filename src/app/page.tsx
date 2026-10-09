@@ -2,7 +2,7 @@ import React from 'react';
 import HeroBanner from '@/components/HeroBanner';
 import ProductCard from '@/components/ProductCard';
 import { getAllProducts, getAllCategories, Product, Category } from '@/lib/api';
-import { TrendingUp, TrendingDown, LayoutGrid, Search, Filter } from 'lucide-react';
+import { TrendingUp, TrendingDown, LayoutGrid } from 'lucide-react';
 import Link from 'next/link';
 
 

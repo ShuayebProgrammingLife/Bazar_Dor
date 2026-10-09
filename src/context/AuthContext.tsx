@@ -20,7 +20,7 @@ interface AuthContextType {
   signin: (email: string, pass: string) => Promise<boolean>;
   signup: (name: string, email: string, pass: string) => Promise<boolean>;
   socialLogin: (provider: 'google' | 'github') => Promise<void>;
-  updateUser: (newName: string) => Promise<boolean>;
+  updateUser: (newName: string, newAvatar?: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -78,19 +78,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    try {
-      // Ensure DB initialized
-      getRegisteredUsers();
+    const initializeSession = () => {
+      try {
+        // Ensure DB initialized
+        getRegisteredUsers();
 
-      const savedUser = localStorage.getItem(STORAGE_KEY);
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
+        const savedUser = localStorage.getItem(STORAGE_KEY);
+        if (savedUser) {
+          setUser(JSON.parse(savedUser));
+        }
+      } catch (e) {
+        console.error('Failed to parse saved user:', e);
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      console.error('Failed to parse saved user:', e);
-    } finally {
-      setLoading(false);
-    }
+    };
+
+    const timer = window.setTimeout(initializeSession, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const saveUserSession = (userData: User | null) => {
@@ -212,7 +217,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     toast.success(`${providerName}-এর মাধ্যমে সফলভাবে সাইন ইন করা হয়েছে!`);
   };
 
-  const updateUser = async (newNameInput: string): Promise<boolean> => {
+  const updateUser = async (newNameInput: string, newAvatar?: string): Promise<boolean> => {
     const newName = newNameInput.trim();
     if (!newName) {
       toast.error('অনুগ্রহ করে একটি সঠিক নাম লিখুন');
@@ -224,20 +229,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return false;
     }
 
-    const updatedActiveUser: User = { ...user, name: newName };
+    const updatedActiveUser: User = {
+      ...user,
+      name: newName,
+      avatar: newAvatar || user.avatar,
+    };
     saveUserSession(updatedActiveUser);
 
     // Also update in registered users DB
     const registeredUsers = getRegisteredUsers();
     const updatedUsers = registeredUsers.map((u) => {
       if (u.email.toLowerCase() === user.email.toLowerCase()) {
-        return { ...u, name: newName };
+        return {
+          ...u,
+          name: newName,
+          avatar: newAvatar || u.avatar || user.avatar,
+        };
       }
       return u;
     });
     saveRegisteredUsers(updatedUsers);
 
-    toast.success('আপনার নাম সফলভাবে আপডেট করা হয়েছে!');
+    toast.success('আপনার প্রোফাইল তথ্য সফলভাবে আপডেট করা হয়েছে!');
     return true;
   };
 

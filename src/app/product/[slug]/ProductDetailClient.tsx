@@ -233,7 +233,14 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <input
+              type="text"
+              value={marketSearch}
+              onChange={(event) => setMarketSearch(event.target.value)}
+              placeholder="বাজার খুঁজুন"
+              className="w-full sm:w-52 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none ring-0 placeholder:text-slate-400 focus:border-emerald-500"
+            />
             <button
               onClick={() => setSelectedDivision('all')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${

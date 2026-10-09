@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { User as UserIcon, Mail, ShieldCheck, Edit3, ArrowLeft } from 'lucide-react';
@@ -44,9 +45,11 @@ export default function ProfilePage() {
           {/* Avatar */}
           <div className="w-24 h-24 rounded-full bg-white p-1.5 shadow-xl -mt-12 mb-4 border-2 border-emerald-500 inline-block">
             {user.avatar ? (
-              <img
+              <Image
                 src={user.avatar}
                 alt={user.name}
+                width={96}
+                height={96}
                 className="w-full h-full rounded-full object-cover"
               />
             ) : (
