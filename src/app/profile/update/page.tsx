@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Edit3, User as UserIcon, ArrowLeft, CheckCircle, UploadCloud } from 'lucide-react';
+import { Edit3, User as UserIcon, ArrowLeft, CheckCircle, UploadCloud, MoonStar, SunMedium } from 'lucide-react';
 
 export default function ProfileUpdatePage() {
   const router = useRouter();
@@ -13,11 +13,21 @@ export default function ProfileUpdatePage() {
   const [name, setName] = useState(user?.name || '');
   const [avatarPreview, setAvatarPreview] = useState(user?.avatar || '');
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('bazardor_theme') === 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('dark', darkMode);
+    window.localStorage.setItem('bazardor_theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   if (!user) {
     return (
-      <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-3xl border border-slate-200 text-center space-y-5">
-        <h2 className="text-2xl font-black text-slate-900">সাইন ইন প্রয়োজন</h2>
+      <div className={`max-w-md mx-auto my-16 p-8 rounded-3xl border text-center space-y-5 ${darkMode ? 'border-slate-700 bg-slate-900 text-slate-100' : 'border-slate-200 bg-white text-slate-900'}`}>
+        <h2 className="text-2xl font-black">সাইন ইন প্রয়োজন</h2>
         <Link href="/signin" className="block py-3 bg-emerald-600 text-white font-bold rounded-xl">
           সাইন ইন করুন
         </Link>
@@ -52,88 +62,114 @@ export default function ProfileUpdatePage() {
     }
   };
 
+  const shellClasses = darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900';
+  const panelClasses = darkMode ? 'bg-slate-900 border-slate-700 shadow-slate-950/40 text-slate-100' : 'bg-white border-slate-200 shadow-xl text-slate-900';
+  const inputClasses = darkMode ? 'bg-slate-800 border-slate-600 text-slate-100 placeholder:text-slate-400 focus:border-emerald-400' : 'bg-slate-50 border-slate-300 text-slate-900 placeholder:text-slate-500 focus:border-emerald-500';
+  const labelClasses = darkMode ? 'text-slate-300' : 'text-slate-700';
+  const mutedTextClasses = darkMode ? 'text-slate-400' : 'text-slate-500';
+
   return (
-    <div className="max-w-md mx-auto px-4 py-12 space-y-6">
-      
-      <Link
-        href="/profile"
-        className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-emerald-600 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        <span>প্রোফাইলে ফিরে যান</span>
-      </Link>
+    <div className={`min-h-screen px-4 py-12 transition-colors ${shellClasses}`}>
+      <div className="mx-auto max-w-md space-y-6">
+        <Link
+          href="/profile"
+          className={`inline-flex items-center gap-2 text-xs font-bold transition-colors ${darkMode ? 'text-slate-300 hover:text-emerald-400' : 'text-slate-600 hover:text-emerald-600'}`}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>প্রোফাইলে ফিরে যান</span>
+        </Link>
 
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 space-y-6">
-        
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center font-bold text-xl">
-            <Edit3 className="w-6 h-6" />
+        <div className={`rounded-3xl border p-8 space-y-6 shadow-xl ${panelClasses}`}>
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-slate-200/70 bg-slate-50/80 px-3 py-2">
+            <div className="flex items-center gap-2 text-sm font-bold text-slate-700">
+              {darkMode ? <MoonStar className="h-4 w-4 text-emerald-400" /> : <SunMedium className="h-4 w-4 text-amber-500" />}
+              <span>ডার্ক মোড</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className={`text-[10px] font-bold ${darkMode ? 'text-slate-300' : 'text-slate-500'}`}>
+                {darkMode ? 'অন' : 'অফ'}
+              </span>
+              <button
+                type="button"
+                aria-label="ডার্ক মোড চালু/বন্ধ করুন"
+                onClick={() => setDarkMode((prev) => !prev)}
+                className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${darkMode ? 'bg-emerald-500' : 'bg-slate-300'}`}
+              >
+                <span className={`inline-block h-5 w-5 rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`} />
+              </button>
+            </div>
           </div>
-          <h1 className="text-2xl font-black text-slate-900">
-            তথ্য আপডেট করুন
-          </h1>
-          <p className="text-xs text-slate-500 font-medium">
-            আপনার প্রোফাইলের নাম সংশোধন বা পরিবর্তন করুন
-          </p>
-        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="flex flex-col items-center gap-3 py-2">
-            <div className="relative h-20 w-20 overflow-hidden rounded-full border-2 border-emerald-200 bg-slate-100 shadow-sm">
-              {avatarPreview ? (
-                <Image
-                  src={avatarPreview}
-                  alt="Profile preview"
-                  fill
-                  className="object-cover"
+          <div className="text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center font-bold text-xl">
+              <Edit3 className="w-6 h-6" />
+            </div>
+            <h1 className={`text-2xl font-black ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+              তথ্য আপডেট করুন
+            </h1>
+            <p className={`text-xs font-medium ${mutedTextClasses}`}>
+              আপনার প্রোফাইলের নাম এবং ছবি আপডেট করুন
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="flex flex-col items-center gap-3 py-2">
+              <div className={`relative h-20 w-20 overflow-hidden rounded-full border-2 shadow-sm ${darkMode ? 'border-emerald-400 bg-slate-700' : 'border-emerald-200 bg-slate-100'}`}>
+                {avatarPreview ? (
+                  <Image
+                    src={avatarPreview}
+                    alt="Profile preview"
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className={`flex h-full w-full items-center justify-center ${darkMode ? 'bg-slate-700 text-emerald-400' : 'bg-emerald-50 text-emerald-700'}`}>
+                    <UserIcon className="h-8 w-8" />
+                  </div>
+                )}
+              </div>
+
+              <label className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2 text-xs font-bold transition ${darkMode ? 'border-slate-600 bg-slate-800 text-slate-200 hover:border-emerald-400 hover:text-emerald-300' : 'border-slate-300 bg-slate-50 text-slate-700 hover:border-emerald-500 hover:text-emerald-700'}`}>
+                <UploadCloud className="h-4 w-4" />
+                <span>প্রোফাইল ছবি নির্বাচন</span>
+                <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+              </label>
+            </div>
+
+            <div>
+              <label className={`mb-1 block text-xs font-bold ${labelClasses}`}>
+                সম্পূর্ণ নাম
+              </label>
+              <div className="relative">
+                <UserIcon className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="নতুন নাম লিখুন"
+                  className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/20 ${inputClasses}`}
                 />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              {loading ? (
+                <span>সংরক্ষণ করা হচ্ছে...</span>
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-emerald-50 text-emerald-700">
-                  <UserIcon className="h-8 w-8" />
-                </div>
+                <>
+                  <CheckCircle className="w-4 h-4" />
+                  <span>তথ্য আপডেট করুন</span>
+                </>
               )}
-            </div>
-
-            <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-700">
-              <UploadCloud className="h-4 w-4" />
-              <span>প্রোফাইল ছবি নির্বাচন</span>
-              <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
-            </label>
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">
-              সম্পূর্ণ নাম (Name)
-            </label>
-            <div className="relative">
-              <UserIcon className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="নতুন নাম লিখুন"
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-          >
-            {loading ? (
-              <span>সংরক্ষণ করা হচ্ছে...</span>
-            ) : (
-              <>
-                <CheckCircle className="w-4 h-4" />
-                <span>তথ্য আপডেট করুন (Update Information)</span>
-              </>
-            )}
-          </button>
-        </form>
-
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

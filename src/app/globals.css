@@ -14,13 +14,121 @@
     scroll-behavior: smooth;
   }
 
+  html.dark {
+    --background: #020817;
+    --foreground: #e2e8f0;
+    --card-bg: #0f172a;
+    --card-border: #334155;
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: 'Hind Siliguri', var(--font-sans), sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
+}
+
+html.dark body {
+  background-color: #020817;
+  color: #e2e8f0;
+}
+
+html.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-slate-200,
+html.dark .bg-slate-300 {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-slate-900 {
+  background-color: #020817 !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-400,
+html.dark .text-slate-300,
+html.dark .text-slate-200 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .border-slate-100,
+html.dark .border-slate-700 {
+  border-color: #334155 !important;
+}
+
+html.dark .shadow-xl,
+html.dark .shadow-lg,
+html.dark .shadow-md {
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.5) !important;
+}
+
+html.dark .bazar-navbar {
+  background-color: rgba(15, 23, 42, 0.96) !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bazar-navbar-categories {
+  background-color: rgba(15, 23, 42, 0.96) !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bazar-navbar-drawer {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bazar-navbar .bg-emerald-100,
+html.dark .bazar-navbar-drawer .bg-emerald-50 {
+  background-color: #064e3b !important;
+}
+
+html.dark .bazar-navbar .text-emerald-800,
+html.dark .bazar-navbar-drawer .text-emerald-700 {
+  color: #a7f3d0 !important;
+}
+
+html.dark .bazar-navbar .border-emerald-200 {
+  border-color: #047857 !important;
+}
+
+html.dark .bazar-navbar .bg-rose-50,
+html.dark .bazar-navbar-drawer .bg-rose-50 {
+  background-color: #4c1d2a !important;
+}
+
+html.dark .bazar-navbar .text-rose-700,
+html.dark .bazar-navbar-drawer .text-rose-600 {
+  color: #fecdd3 !important;
+}
+
+html.dark .bazar-navbar .border-rose-200 {
+  border-color: #881337 !important;
+}
+
+html.dark .bazar-navbar a:not(.bg-emerald-600):hover,
+html.dark .bazar-navbar-categories a:not(.bg-emerald-600):hover {
+  background-color: #1e293b !important;
+}
+
+html.dark .bazar-navbar button[aria-label="Toggle Navigation Menu"] {
+  color: #e2e8f0 !important;
 }
 
 /* Ticker Marquee Animation */

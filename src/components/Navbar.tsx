@@ -32,7 +32,7 @@ export default function Navbar({ categories, tickerProducts = [] }: NavbarProps)
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <header className="bazar-navbar sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
       {/* Top Navbar Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
@@ -135,7 +135,7 @@ export default function Navbar({ categories, tickerProducts = [] }: NavbarProps)
       </div>
 
       {/* Middle Row: Category Navigation Links */}
-      <nav className="bg-slate-50/90 border-t border-slate-200/80 overflow-x-auto scrollbar-none">
+      <nav className="bazar-navbar-categories bg-slate-50/90 border-t border-slate-200/80 overflow-x-auto scrollbar-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-1 py-1.5 min-w-max">
             <Link
@@ -173,7 +173,7 @@ export default function Navbar({ categories, tickerProducts = [] }: NavbarProps)
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg">
+        <div className="bazar-navbar-drawer md:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg">
           <div className="pt-2 pb-3 border-b border-slate-100 flex flex-col gap-2">
             {mounted && user ? (
               <div className="flex flex-col gap-2">
