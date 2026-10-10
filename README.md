@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# বাজার দর (BazarDor)
 
-## Getting Started
+বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের বাজারদর এক নজরে দেখার জন্য তৈরি একটি বাংলা-ভিত্তিক ওয়েব অ্যাপ। পণ্যের বর্তমান দাম, দামের পরিবর্তন এবং বিভিন্ন বাজারের মূল্যতথ্য সহজে খুঁজে পেতে BazarDor সহায়তা করে।
 
-First, run the development server:
+## ✨ মূল ফিচার
+
+1. **দৈনিক পণ্যের দাম:** চাল, ডাল, তেল, সবজি, মাছসহ নিত্যপ্রয়োজনীয় পণ্যের বর্তমান দাম দেখুন।
+2. **দাম বাড়া-কমার তালিকা:** গতকালের তুলনায় যেসব পণ্যের দাম বেড়েছে বা কমেছে, সেগুলোর শীর্ষ তালিকা দেখুন।
+3. **ক্যাটাগরি অনুযায়ী ব্রাউজ:** পণ্যকে ক্যাটাগরিতে ভাগ করে সহজে নির্দিষ্ট ধরনের পণ্য খুঁজুন।
+4. **পণ্যের বিস্তারিত মূল্যতথ্য:** প্রতিটি পণ্যের বিস্তারিত পেজে আজ, গতকাল, গত সপ্তাহ ও গত মাসের দাম এবং বাজারভিত্তিক মূল্য দেখুন।
+5. **বাংলা-উপযোগী অভিজ্ঞতা:** বাংলা নাম, সংখ্যা, একক ও ইন্টারফেসের মাধ্যমে তথ্য সহজে পড়ুন।
+
+## 🛠️ ব্যবহৃত প্রযুক্তি
+
+- [Next.js](https://nextjs.org/) 16 (App Router)
+- [React](https://react.dev/) 19
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) 4
+- [Lucide React](https://lucide.dev/) — আইকন
+- [React Hot Toast](https://react-hot-toast.com/) — নোটিফিকেশন
+
+## 🚀 লোকাল মেশিনে চালানো
+
+প্রয়োজন: Node.js এবং npm।
 
 ```bash
+git clone <repository-url>
+cd bazar-dor
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+এরপর ব্রাউজারে [http://localhost:3000](http://localhost:3000) খুলুন।
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📜 উপলভ্য স্ক্রিপ্ট
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev    # ডেভেলপমেন্ট সার্ভার চালু
+npm run build  # প্রোডাকশন বিল্ড তৈরি
+npm run start  # প্রোডাকশন সার্ভার চালু
+npm run lint   # ESLint চালান
+```
