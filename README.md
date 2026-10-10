@@ -6,7 +6,7 @@
 
 - **GitHub Repository:** [ShuayebProgrammingLife/Bazar_Dor](https://github.com/ShuayebProgrammingLife/Bazar_Dor)
 - **Live Demo-01:** [লাইভ সাইট দেখুন](https://bazar-dor-rosy.vercel.app)
-- **Live Demo-01:** [লাইভ সাইট দেখুন](https://bazar-dor1.netlify.app)
+- **Live Demo-02:** [লাইভ সাইট দেখুন](https://bazar-dor1.netlify.app)
 
 ## ✨ মূল ফিচার
 
