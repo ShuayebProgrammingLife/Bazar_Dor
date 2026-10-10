@@ -2,6 +2,12 @@
 
 বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের বাজারদর এক নজরে দেখার জন্য তৈরি একটি বাংলা-ভিত্তিক ওয়েব অ্যাপ। পণ্যের বর্তমান দাম, দামের পরিবর্তন এবং বিভিন্ন বাজারের মূল্যতথ্য সহজে খুঁজে পেতে BazarDor সহায়তা করে।
 
+## 🔗 প্রজেক্ট লিংক
+
+- **GitHub Repository:** [ShuayebProgrammingLife/Bazar_Dor](https://github.com/ShuayebProgrammingLife/Bazar_Dor)
+- **Live Demo-01:** [লাইভ সাইট দেখুন](https://bazar-dor-rosy.vercel.app)
+- **Live Demo-01:** [লাইভ সাইট দেখুন](https://bazar-dor1.netlify.app)
+
 ## ✨ মূল ফিচার
 
 1. **দৈনিক পণ্যের দাম:** চাল, ডাল, তেল, সবজি, মাছসহ নিত্যপ্রয়োজনীয় পণ্যের বর্তমান দাম দেখুন।
@@ -24,7 +30,7 @@
 প্রয়োজন: Node.js এবং npm।
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ShuayebProgrammingLife/Bazar_Dor.git
 cd bazar-dor
 npm install
 npm run dev
